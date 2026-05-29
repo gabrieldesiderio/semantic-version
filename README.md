@@ -1,21 +1,51 @@
-# React + TypeScript + Vite + shadcn/ui
+## Fluxo de desenvolvimento
 
-This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
+### Adicionando uma mudança
 
-## Adding components
-
-To add components to your app, run the following command:
+Toda feature branch que será mergeada para `development` deve incluir um changeset descrevendo a alteração:
 
 ```bash
-npx shadcn@latest add button
+pnpm changeset
 ```
 
-This will place the ui components in the `src/components` directory.
+O prompt vai pedir:
+1. **Tipo de mudança** — escolha um dos três:
+   - `patch` — correção de bug, ajuste visual, melhoria interna (ex: `0.0.1` → `0.0.2`)
+   - `minor` — nova funcionalidade sem quebrar nada existente (ex: `0.1.0` → `0.2.0`)
+   - `major` — mudança que quebra compatibilidade (ex: `1.0.0` → `2.0.0`)
+2. **Descrição** — um resumo curto da mudança em inglês (será usado no CHANGELOG)
 
-## Using components
+Um arquivo será gerado em `.changeset/`. Commite esse arquivo junto com sua feature:
 
-To use the components in your app, import them as follows:
-
-```tsx
-import { Button } from "@/components/ui/button"
+```bash
+git add .changeset/
+git commit -m "feat: minha feature"
 ```
+
+### Escrevendo uma boa descrição de changeset
+
+- Use o **tempo presente**: `Add user authentication` e não `Added user authentication`
+- Seja **objetivo**: descreva o que muda para quem usa, não como foi implementado
+- Evite jargões internos: o CHANGELOG é lido pelo time e às vezes por usuários externos
+
+```
+# Bom
+Add dark mode support to the dashboard
+
+# Ruim
+Refactor ThemeProvider to support multiple color schemes via CSS variables
+```
+
+### Gerando uma nova versão
+
+Quando as features estiverem prontas para release, acesse o repositório no GitHub:
+
+```
+Actions → Version Bump → Run workflow → selecione a branch development → Run workflow
+```
+
+A Action irá automaticamente:
+- Consolidar todos os changesets pendentes
+- Atualizar a versão em `package.json` conforme o tipo mais alto entre os changesets (ex: se houver um `minor` e dois `patch`, a versão sobe `minor`)
+- Gerar/atualizar o `CHANGELOG.md`
+- Fazer commit direto na `development`
