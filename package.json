@@ -11,8 +11,7 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "changeset": "changeset",
-    "version": "changeset version",
-    "release": "changeset publish"
+    "version": "changeset version"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",
