@@ -6,7 +6,6 @@ on:
 jobs:
   version:
     name: Bump version
-    if: github.ref == 'refs/heads/development'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
